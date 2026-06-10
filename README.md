@@ -29,6 +29,26 @@ Main concepts demonstrated:
 * API key security
 * Git and GitHub project workflow
 
+### 02 - Agentic Meal Planner
+
+An AI-powered meal planning workflow that creates a weekly dinner plan based on user constraints such as budget, allergens, calorie target, number of people, number of days, and pantry ingredients.
+
+The application drafts a meal plan, critiques it, revises it through an evaluation loop, and then generates a grocery shopping list.
+
+Project folder: `02-agentic-meal-planner/`
+
+Main concepts demonstrated:
+
+* Prompt chaining
+* Agentic workflow design
+* JSON mode
+* Structured output parsing
+* Evaluation and revision loops
+* Simple rate limiting with `MAX_PASSES`
+* OpenAI API integration
+* Python orchestration
+* Grocery list generation
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -51,6 +71,14 @@ ai-engineering-learning-path/
 
   * README.md
   * quiz_generator.py
+  * requirements.txt
+  * .env.example
+  * .gitignore
+
+* 02-agentic-meal-planner/
+
+  * README.md
+  * agentic_meal_planner.py
   * requirements.txt
   * .env.example
   * .gitignore
