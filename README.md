@@ -49,6 +49,23 @@ Main concepts demonstrated:
 * Python orchestration
 * Grocery list generation
 
+### 03 - Email Template Generator
+
+A beginner-friendly business automation script that creates a personalized email from a reusable text template.
+
+The script reads an email template, replaces placeholders with customer and order data, and writes the final email to a new text file.
+
+Project folder: `03-email-template-generator/`
+
+Main concepts demonstrated:
+
+* Python functions
+* Reading `.txt` files
+* Writing `.txt` files
+* String replacement with `.replace()`
+* Simple business automation workflow
+* Beginner-friendly project documentation
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -82,6 +99,13 @@ ai-engineering-learning-path/
   * requirements.txt
   * .env.example
   * .gitignore
+
+* 03-email-template-generator/
+
+  * README.md
+  * main.py
+  * email_template.txt
+  * email_to_send.txt
 
 ## Future Projects
 
