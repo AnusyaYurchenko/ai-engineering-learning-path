@@ -1,0 +1,15 @@
+GitHub Users Report
+
+Username: github
+Public repos: 554
+Profile URL: https://github.com/github
+
+Username: octocat
+Public repos: 8
+Profile URL: https://github.com/octocat
+
+Username: AnusyaYurchenko
+Public repos: 8
+Profile URL: https://github.com/AnusyaYurchenko
+
+Could not get data for fake-user-123456789.
