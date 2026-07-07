@@ -66,6 +66,24 @@ Main concepts demonstrated:
 * Simple business automation workflow
 * Beginner-friendly project documentation
 
+### 04 - GitHub User Report Generator
+
+A beginner-friendly API automation script that collects public GitHub profile information for a list of usernames and writes a clean text report.
+
+The script sends requests to the GitHub API, checks response status codes, converts JSON responses into Python dictionaries, and writes profile data to `github_users_report.txt`.
+
+Project folder: `04-github-user-report-generator/`
+
+Main concepts demonstrated:
+
+* Working with APIs using `requests`
+* API endpoints and status code checks
+* JSON responses as Python dictionaries
+* Python functions and loops
+* Writing `.txt` report files
+* Separating reusable helper functions from main script
+* Basic error handling for missing users
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -106,6 +124,14 @@ ai-engineering-learning-path/
   * main.py
   * email_template.txt
   * email_to_send.txt
+
+* 04-github-user-report-generator/
+
+  * README.md
+  * main.py
+  * helpers.py
+  * requirements.txt
+  * github_users_report.txt
 
 ## Future Projects
 
