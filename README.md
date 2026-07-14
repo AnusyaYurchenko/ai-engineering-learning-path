@@ -84,6 +84,23 @@ Main concepts demonstrated:
 * Separating reusable helper functions from main script
 * Basic error handling for missing users
 
+### 05 - AI Email Draft Generator
+
+A beginner-friendly AI automation script that generates a professional customer email draft from invoice data using the Gemini API.
+
+The script reads a Gemini API key from `.env`, creates a reusable prompt from invoice data, sends the prompt to Gemini, and saves the generated email draft to `email_draft.txt`.
+
+Project folder: `05-ai-email-draft-generator/`
+
+Main concepts demonstrated:
+
+* Gemini API integration with Python
+* Environment variables and `.env` files
+* API key protection with `.gitignore`
+* Reusable prompt template functions
+* Writing AI-generated text to `.txt` files
+* Basic error handling with `try / except`
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -132,6 +149,15 @@ ai-engineering-learning-path/
   * helpers.py
   * requirements.txt
   * github_users_report.txt
+
+* 05-ai-email-draft-generator/
+
+  * README.md
+  * main.py
+  * requirements.txt
+  * .env.example
+  * .gitignore
+  * email_draft.txt
 
 ## Future Projects
 
