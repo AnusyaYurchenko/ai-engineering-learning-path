@@ -1,0 +1,33 @@
+{
+    "classified_messages": [
+        {
+            "message": "I need help with my invoice.",
+            "category": "invoice"
+        },
+        {
+            "message": "Where is my order?",
+            "category": "order"
+        },
+        {
+            "message": "Thanks for your help.",
+            "category": "general"
+        },
+        {
+            "message": "Please send my receipt.",
+            "category": "invoice"
+        },
+        {
+            "message": "My package has not arrived.",
+            "category": "order"
+        },
+        {
+            "message": "I cannot pay my bill.",
+            "category": "invoice"
+        }
+    ],
+    "category_counts": {
+        "invoice": 3,
+        "order": 2,
+        "general": 1
+    }
+}
