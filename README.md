@@ -101,6 +101,24 @@ Main concepts demonstrated:
 * Writing AI-generated text to `.txt` files
 * Basic error handling with `try / except`
 
+### 06 - Customer Message Classifier
+
+A beginner-friendly business automation script that classifies customer messages into invoice, order, or general categories and creates a structured JSON report.
+
+The script checks each message for important keywords, stores each classified message, counts how many messages belong to each category, and saves the full report to `message_classification_report.json`.
+
+Project folder: `06-customer-message-classifier/`
+
+Main concepts demonstrated:
+
+* Python functions
+* Lists and dictionaries
+* Loops
+* Keyword-based classification
+* Counting category totals
+* Saving structured JSON reports
+* Practical customer support automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -158,6 +176,13 @@ ai-engineering-learning-path/
   * .env.example
   * .gitignore
   * email_draft.txt
+
+* 06-customer-message-classifier/
+
+  * README.md
+  * main.py
+  * .gitignore
+  * message_classification_report.json
 
 ## Future Projects
 
