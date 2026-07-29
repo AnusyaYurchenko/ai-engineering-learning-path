@@ -1,0 +1,14 @@
+[
+    {
+        "message": "I was charged twice.",
+        "category": "invoice"
+    },
+    {
+        "message": "Where is my package?",
+        "category": "order"
+    },
+    {
+        "message": "Thank you for quick support.",
+        "category": "general"
+    }
+]
