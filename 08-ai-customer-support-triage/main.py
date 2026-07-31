@@ -28,13 +28,26 @@ Return only valid JSON. Do not add explanation.
 def triage_with_gemini(client, message):
     prompt = create_triage_prompt(message)
 
-    response = client.models.generate_content(
-        model="gemini-3.1-flash-lite",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.1-flash-lite",
+            contents=prompt
+        )
 
-    result_text = response.text.strip()
-    return result_text
+        result_text = response.text.strip()
+        return result_text
+    except Exception as error:
+        print(f"Gemini API error for message: {message}")
+        print(error)
+        return None
+
+
+def parse_ai_json(result_text):
+    try:
+        result = json.loads(result_text)
+        return result
+    except json.JSONDecodeError:
+        return None
 
 
 messages = [
@@ -54,15 +67,26 @@ if api_key:
 
     for message in messages:
         result_text = triage_with_gemini(client, message)
-        result = json.loads(result_text)
+        result = parse_ai_json(result_text) if result_text else None
 
-        triage_results.append({
-            "message": message,
-            "category": result["category"],
-            "confidence": result["confidence"],
-            "priority": result["priority"],
-            "suggested_action": result["suggested_action"]
-        })
+        if result:
+            triage_results.append({
+                "message": message,
+                "category": result.get("category", "unknown"),
+                "confidence": result.get("confidence", "unknown"),
+                "priority": result.get("priority", "unknown"),
+                "suggested_action": result.get("suggested_action", "Needs human review")
+            })
+        else:
+            print(f"Could not parse AI response for message: {message}")
+
+            triage_results.append({
+                "message": message,
+                "category": "unknown",
+                "confidence": "low",
+                "priority": "medium",
+                "suggested_action": "Needs human review"
+            })
 
     with open(report_file, "w", encoding="utf-8") as file:
         json.dump(triage_results, file, indent=4)
