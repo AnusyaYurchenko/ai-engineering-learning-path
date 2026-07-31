@@ -20,13 +20,18 @@ For each message, the script returns:
 - priority
 - suggested action
 
+The script also includes basic reliability handling so failed or unclear AI responses do not disappear from the report.
+
 ## How It Works
 
 1. The script loads the Gemini API key from `.env`.
 2. A triage prompt is created for each customer message.
 3. Gemini returns structured JSON.
-4. Python converts the JSON text into a dictionary with `json.loads()`.
-5. The script saves all triage results to `ai_triage_report.json`.
+4. Python tries to convert the JSON text into a dictionary with `json.loads()`.
+5. If the API call fails, the script returns `None` instead of crashing.
+6. If the AI returns invalid JSON, the script adds a safe fallback result.
+7. If the AI forgets a field, `.get()` provides a default value.
+8. The script saves all triage results to `ai_triage_report.json`.
 
 ## Project Structure
 
@@ -89,6 +94,18 @@ Example result:
 }
 ```
 
+Fallback result if AI output cannot be parsed:
+
+```json
+{
+    "message": "Customer message here",
+    "category": "unknown",
+    "confidence": "low",
+    "priority": "medium",
+    "suggested_action": "Needs human review"
+}
+```
+
 ## What I Learned
 
 In this project, I practiced:
@@ -97,7 +114,10 @@ In this project, I practiced:
 - creating structured AI prompts
 - asking AI to return JSON
 - converting JSON text into a Python dictionary
-- reading specific dictionary fields
+- handling API errors with `try / except`
+- handling invalid JSON with `json.JSONDecodeError`
+- using `.get()` to protect against missing fields
+- keeping failed messages in the final report
 - using `.env` for API key safety
 - saving AI results to a JSON report
 - building a realistic customer support automation workflow
@@ -107,3 +127,5 @@ In this project, I practiced:
 This project shows how AI can help a business organize customer support messages faster.
 
 A larger version could route high-priority messages to support staff, send refund cases to billing, or prepare data for a customer support dashboard.
+
+The reliability handling is important because real AI systems should not silently lose customer messages when an API call fails or the AI response is not perfectly formatted.
