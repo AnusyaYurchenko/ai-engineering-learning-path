@@ -142,7 +142,7 @@ Main concepts demonstrated:
 
 A beginner-friendly AI automation script that uses Gemini to triage customer support messages with category, confidence, priority, and suggested action.
 
-The script asks Gemini to return structured JSON, converts the AI response into Python dictionaries, and saves a full support triage report to `ai_triage_report.json`.
+The script asks Gemini to return structured JSON, converts the AI response into Python dictionaries, handles API or JSON parsing failures safely, and saves a full support triage report to `ai_triage_report.json`.
 
 Project folder: `08-ai-customer-support-triage/`
 
@@ -152,6 +152,9 @@ Main concepts demonstrated:
 * Structured prompt design
 * JSON output from an AI model
 * Converting JSON text with `json.loads()`
+* API error handling with `try / except`
+* Invalid JSON handling with `json.JSONDecodeError`
+* Safe dictionary access with `.get()`
 * Environment variables and `.env` files
 * API key protection with `.gitignore`
 * Saving AI triage reports as JSON
