@@ -1,0 +1,72 @@
+import os
+import json
+from dotenv import load_dotenv
+from google import genai
+
+load_dotenv()
+
+api_key = os.getenv("GEMINI_API_KEY")
+
+
+def create_triage_prompt(message):
+    return f"""
+You are a customer support assistant.
+
+Analyze this customer message and return JSON with:
+- category: invoice, order, refund, complaint, or general
+- confidence: high, medium, or low
+- priority: high, medium, or low
+- suggested_action: one short business action
+
+Message:
+{message}
+
+Return only valid JSON. Do not add explanation.
+"""
+
+
+def triage_with_gemini(client, message):
+    prompt = create_triage_prompt(message)
+
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt
+    )
+
+    result_text = response.text.strip()
+    return result_text
+
+
+messages = [
+    "I was charged twice and need a refund.",
+    "Where is my package?",
+    "Thank you for quick support.",
+    "My order arrived damaged and I am angry."
+]
+
+triage_results = []
+report_file = "ai_triage_report.json"
+
+if api_key:
+    print("API key is loaded.")
+
+    client = genai.Client(api_key=api_key)
+
+    for message in messages:
+        result_text = triage_with_gemini(client, message)
+        result = json.loads(result_text)
+
+        triage_results.append({
+            "message": message,
+            "category": result["category"],
+            "confidence": result["confidence"],
+            "priority": result["priority"],
+            "suggested_action": result["suggested_action"]
+        })
+
+    with open(report_file, "w", encoding="utf-8") as file:
+        json.dump(triage_results, file, indent=4)
+
+    print("AI triage report saved.")
+else:
+    print("API key is missing. Skipping classification.")
