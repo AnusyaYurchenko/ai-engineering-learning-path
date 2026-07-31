@@ -138,6 +138,25 @@ Main concepts demonstrated:
 * Saving AI classification results as JSON
 * Practical customer support automation logic
 
+### 08 - AI Customer Support Triage
+
+A beginner-friendly AI automation script that uses Gemini to triage customer support messages with category, confidence, priority, and suggested action.
+
+The script asks Gemini to return structured JSON, converts the AI response into Python dictionaries, and saves a full support triage report to `ai_triage_report.json`.
+
+Project folder: `08-ai-customer-support-triage/`
+
+Main concepts demonstrated:
+
+* Gemini API integration with Python
+* Structured prompt design
+* JSON output from an AI model
+* Converting JSON text with `json.loads()`
+* Environment variables and `.env` files
+* API key protection with `.gitignore`
+* Saving AI triage reports as JSON
+* Practical customer support automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -211,6 +230,15 @@ ai-engineering-learning-path/
   * .env.example
   * .gitignore
   * ai_classification.json
+
+* 08-ai-customer-support-triage/
+
+  * README.md
+  * main.py
+  * requirements.txt
+  * .env.example
+  * .gitignore
+  * ai_triage_report.json
 
 ## Future Projects
 
