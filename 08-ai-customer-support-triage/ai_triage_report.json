@@ -1,0 +1,30 @@
+[
+    {
+        "message": "I was charged twice and need a refund.",
+        "category": "refund",
+        "confidence": "high",
+        "priority": "high",
+        "suggested_action": "Verify transaction history and process a refund for the duplicate charge."
+    },
+    {
+        "message": "Where is my package?",
+        "category": "order",
+        "confidence": "high",
+        "priority": "medium",
+        "suggested_action": "Provide order tracking status"
+    },
+    {
+        "message": "Thank you for quick support.",
+        "category": "general",
+        "confidence": "high",
+        "priority": "low",
+        "suggested_action": "Close ticket"
+    },
+    {
+        "message": "My order arrived damaged and I am angry.",
+        "category": "complaint",
+        "confidence": "high",
+        "priority": "high",
+        "suggested_action": "Initiate return or replacement process and offer an apology."
+    }
+]
