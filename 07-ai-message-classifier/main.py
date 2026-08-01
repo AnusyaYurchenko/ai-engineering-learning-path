@@ -37,12 +37,22 @@ def classify_with_gemini(client, message):
     return category
 
 
-messages = [
-    "I was charged twice.",
-    "Where is my package?",
-    "Thank you for quick support."
-]
+def load_messages(file_name):
+    with open(file_name, "r", encoding="utf-8") as file:
+        lines = file.readlines()
 
+    messages = []
+
+    for line in lines:
+        clean_line = line.strip()
+
+        if clean_line:
+            messages.append(clean_line)
+
+    return messages
+
+
+messages = load_messages("messages.txt")
 classified_messages = []
 
 if api_key:
