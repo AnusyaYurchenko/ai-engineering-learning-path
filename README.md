@@ -121,9 +121,9 @@ Main concepts demonstrated:
 
 ### 07 - AI Message Classifier
 
-A beginner-friendly AI automation script that uses Gemini to classify customer messages into invoice, order, or general categories.
+A beginner-friendly AI automation script that reads customer messages from `messages.txt` and uses Gemini to classify them into invoice, order, or general categories.
 
-The script creates a clear classification prompt, sends each customer message to Gemini, cleans the AI response, and saves the results to `ai_classification.json`.
+The script loads messages from a text file, skips empty lines, creates a clear classification prompt, sends each customer message to Gemini, cleans the AI response, and saves the results to `ai_classification.json`.
 
 Project folder: `07-ai-message-classifier/`
 
@@ -131,9 +131,11 @@ Main concepts demonstrated:
 
 * Gemini API integration with Python
 * Prompt design for AI classification
+* Reading input data from `.txt` files
 * Environment variables and `.env` files
 * API key protection with `.gitignore`
 * Python functions and loops
+* Cleaning file input with `.strip()`
 * Cleaning model output with `.strip().lower()`
 * Saving AI classification results as JSON
 * Practical customer support automation logic
@@ -232,6 +234,7 @@ ai-engineering-learning-path/
   * requirements.txt
   * .env.example
   * .gitignore
+  * messages.txt
   * ai_classification.json
 
 * 08-ai-customer-support-triage/
