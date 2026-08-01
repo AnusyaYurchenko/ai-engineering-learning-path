@@ -1,6 +1,6 @@
 [
     {
-        "message": "I was charged twice.",
+        "message": "I was charged twice and need a refund.",
         "category": "invoice"
     },
     {
@@ -10,5 +10,9 @@
     {
         "message": "Thank you for quick support.",
         "category": "general"
+    },
+    {
+        "message": "My order arrived damaged and I am angry.",
+        "category": "order"
     }
 ]
