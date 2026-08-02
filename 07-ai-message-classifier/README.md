@@ -8,23 +8,24 @@ Sorting these messages manually can take time. This project uses Gemini AI to cl
 
 ## What This Project Does
 
-The script reads customer messages from a text file, sends each message to Gemini, and asks the model to classify each message into one category:
+The script reads customer messages from a CSV file, sends each message to Gemini, and asks the model to classify each message into one category:
 
 - invoice
 - order
 - general
 
-The script then saves the AI classification results to a JSON file.
+The script keeps the customer name connected to each message and saves a JSON report with detailed classifications and category totals.
 
 ## How It Works
 
 1. The script loads the Gemini API key from `.env`.
-2. Customer messages are loaded from `messages.txt`.
-3. Empty lines are skipped.
+2. Customer names and messages are loaded from `messages.csv`.
+3. Each CSV row is read as a dictionary with `csv.DictReader`.
 4. A prompt is created for each customer message.
 5. Gemini classifies the message.
 6. Python cleans the AI response with `.strip().lower()`.
-7. The result is saved to `ai_classification.json`.
+7. The script counts how many messages are in each category.
+8. The final report is saved to `ai_classification.json`.
 
 ## Project Structure
 
@@ -35,6 +36,7 @@ The script then saves the AI classification results to a JSON file.
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
+├── messages.csv
 ├── messages.txt
 └── ai_classification.json
 ```
@@ -54,18 +56,17 @@ Do not upload your real `.env` file to GitHub.
 Add customer messages to:
 
 ```text
-messages.txt
+messages.csv
 ```
 
-One message should be written per line.
+The CSV should contain two columns:
 
-Example:
-
-```text
-I was charged twice and need a refund.
-Where is my package?
-Thank you for quick support.
-My order arrived damaged and I am angry.
+```csv
+customer,message
+Maria,I was charged twice and need a refund.
+Ana,Where is my package?
+Sara,Thank you for quick support.
+Emma,My order arrived damaged and I am angry.
 ```
 
 ## Install Dependencies
@@ -98,24 +99,25 @@ ai_classification.json
 Example JSON result:
 
 ```json
-[
-    {
-        "message": "I was charged twice and need a refund.",
-        "category": "invoice"
-    },
-    {
-        "message": "Where is my package?",
-        "category": "order"
-    },
-    {
-        "message": "Thank you for quick support.",
-        "category": "general"
-    },
-    {
-        "message": "My order arrived damaged and I am angry.",
-        "category": "order"
+{
+    "classified_messages": [
+        {
+            "customer": "Maria",
+            "message": "I was charged twice and need a refund.",
+            "category": "invoice"
+        },
+        {
+            "customer": "Ana",
+            "message": "Where is my package?",
+            "category": "order"
+        }
+    ],
+    "category_counts": {
+        "invoice": 1,
+        "order": 1,
+        "general": 0
     }
-]
+}
 ```
 
 ## What I Learned
@@ -126,15 +128,17 @@ In this project, I practiced:
 - using Gemini API with Python
 - loading API keys from `.env`
 - protecting secrets with `.gitignore`
-- reading input data from a `.txt` file
-- skipping empty lines with `.strip()`
+- reading input data from a `.csv` file
+- using `csv.DictReader` to read rows as dictionaries
+- keeping customer names connected to messages
 - using functions for reusable code
-- looping through customer messages
+- looping through customer records
 - cleaning AI output with `.strip().lower()`
-- saving AI results as JSON
+- counting category totals
+- saving structured AI results as JSON
 
 ## Business Value
 
 This project shows how AI can help a business sort customer messages faster.
 
-A larger version could read real support messages from a file, classify them, route messages to the correct team, create support reports, or prepare data for a customer service dashboard.
+A larger version could read real support messages from a spreadsheet export, classify them, route messages to the correct team, create support reports, or prepare data for a customer service dashboard.
