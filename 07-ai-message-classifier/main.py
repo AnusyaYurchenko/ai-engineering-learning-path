@@ -1,5 +1,6 @@
 import os
 import json
+import csv
 from dotenv import load_dotenv
 from google import genai
 
@@ -37,41 +38,58 @@ def classify_with_gemini(client, message):
     return category
 
 
-def load_messages(file_name):
-    with open(file_name, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-
+def load_messages_from_csv(file_name):
     messages = []
 
-    for line in lines:
-        clean_line = line.strip()
+    with open(file_name, "r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
 
-        if clean_line:
-            messages.append(clean_line)
+        for row in reader:
+            messages.append({
+                "customer": row["customer"],
+                "message": row["message"]
+            })
 
     return messages
 
 
-messages = load_messages("messages.txt")
+messages = load_messages_from_csv("messages.csv")
 classified_messages = []
+
+category_counts = {
+    "invoice": 0,
+    "order": 0,
+    "general": 0
+}
 
 if api_key:
     print("Gemini API key is loaded.")
 
     client = genai.Client(api_key=api_key)
 
-    for message in messages:
-        category = classify_with_gemini(client, message)
+    for item in messages:
+        category = classify_with_gemini(client, item["message"])
 
         classified_messages.append({
-            "message": message,
+            "customer": item["customer"],
+            "message": item["message"],
             "category": category
         })
+
+        if category in category_counts:
+            category_counts[category] += 1
+        else:
+            category_counts["general"] += 1
+
+    report = {
+        "classified_messages": classified_messages,
+        "category_counts": category_counts
+    }
 
     file_name = "ai_classification.json"
 
     with open(file_name, "w", encoding="utf-8") as file:
-        json.dump(classified_messages, file, indent=4)
+        json.dump(report, file, indent=4)
 
     print(f"{file_name} created successfully.")
 else:
