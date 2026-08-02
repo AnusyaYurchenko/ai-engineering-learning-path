@@ -1,18 +1,29 @@
-[
-    {
-        "message": "I was charged twice and need a refund.",
-        "category": "invoice"
-    },
-    {
-        "message": "Where is my package?",
-        "category": "order"
-    },
-    {
-        "message": "Thank you for quick support.",
-        "category": "general"
-    },
-    {
-        "message": "My order arrived damaged and I am angry.",
-        "category": "order"
+{
+    "classified_messages": [
+        {
+            "customer": "Maria",
+            "message": "I was charged twice and need a refund.",
+            "category": "invoice"
+        },
+        {
+            "customer": "Ana",
+            "message": "Where is my package?",
+            "category": "order"
+        },
+        {
+            "customer": "Sara",
+            "message": "Thank you for quick support.",
+            "category": "general"
+        },
+        {
+            "customer": "Emma",
+            "message": "My order arrived damaged and I am angry.",
+            "category": "order"
+        }
+    ],
+    "category_counts": {
+        "invoice": 1,
+        "order": 2,
+        "general": 1
     }
-]
+}
