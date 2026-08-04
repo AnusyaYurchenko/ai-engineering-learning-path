@@ -14,7 +14,10 @@ The script reads customer messages from a CSV file, sends each message to Gemini
 - order
 - general
 
-The script keeps the customer name connected to each message and saves a JSON report with detailed classifications and category totals.
+The script keeps the customer name connected to each message and saves the results in two formats:
+
+- JSON for apps, APIs, and automation systems
+- CSV for Excel, Google Sheets, and business reports
 
 ## How It Works
 
@@ -25,7 +28,8 @@ The script keeps the customer name connected to each message and saves a JSON re
 5. Gemini classifies the message.
 6. Python cleans the AI response with `.strip().lower()`.
 7. The script counts how many messages are in each category.
-8. The final report is saved to `ai_classification.json`.
+8. The final JSON report is saved to `ai_classification.json`.
+9. A spreadsheet-friendly CSV report is saved to `ai_classification_report.csv`.
 
 ## Project Structure
 
@@ -38,7 +42,8 @@ The script keeps the customer name connected to each message and saves a JSON re
 ├── .gitignore
 ├── messages.csv
 ├── messages.txt
-└── ai_classification.json
+├── ai_classification.json
+└── ai_classification_report.csv
 ```
 
 ## Setup
@@ -86,14 +91,16 @@ python main.py
 ```text
 Gemini API key is loaded.
 ai_classification.json created successfully.
+ai_classification_report.csv created successfully.
 ```
 
-## Output File
+## Output Files
 
 The script creates:
 
 ```text
 ai_classification.json
+ai_classification_report.csv
 ```
 
 Example JSON result:
@@ -120,6 +127,16 @@ Example JSON result:
 }
 ```
 
+Example CSV result:
+
+```csv
+customer,message,category
+Maria,I was charged twice and need a refund.,invoice
+Ana,Where is my package?,order
+Sara,Thank you for quick support.,general
+Emma,My order arrived damaged and I am angry.,order
+```
+
 ## What I Learned
 
 In this project, I practiced:
@@ -136,6 +153,7 @@ In this project, I practiced:
 - cleaning AI output with `.strip().lower()`
 - counting category totals
 - saving structured AI results as JSON
+- writing AI results to CSV with `csv.DictWriter`
 
 ## Business Value
 
