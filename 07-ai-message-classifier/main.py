@@ -53,19 +53,14 @@ def load_messages_from_csv(file_name):
     return messages
 
 
-messages = load_messages_from_csv("messages.csv")
-classified_messages = []
+def classify_messages(client, messages):
+    classified_messages = []
 
-category_counts = {
-    "invoice": 0,
-    "order": 0,
-    "general": 0
-}
-
-if api_key:
-    print("Gemini API key is loaded.")
-
-    client = genai.Client(api_key=api_key)
+    category_counts = {
+        "invoice": 0,
+        "order": 0,
+        "general": 0
+    }
 
     for item in messages:
         category = classify_with_gemini(client, item["message"])
@@ -81,20 +76,15 @@ if api_key:
         else:
             category_counts["general"] += 1
 
-    report = {
-        "classified_messages": classified_messages,
-        "category_counts": category_counts
-    }
+    return classified_messages, category_counts
 
-    json_file_name = "ai_classification.json"
 
+def save_json_report(json_file_name, report):
     with open(json_file_name, "w", encoding="utf-8") as file:
         json.dump(report, file, indent=4)
 
-    print(f"{json_file_name} created successfully.")
 
-    csv_file_name = "ai_classification_report.csv"
-
+def save_csv_report(csv_file_name, classified_messages):
     with open(csv_file_name, "w", encoding="utf-8", newline="") as file:
         fieldnames = ["customer", "message", "category"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
@@ -102,6 +92,32 @@ if api_key:
         writer.writeheader()
         writer.writerows(classified_messages)
 
-    print(f"{csv_file_name} created successfully.")
-else:
-    print("Gemini API key is missing.")
+
+def main():
+    messages = load_messages_from_csv("messages.csv")
+
+    if api_key:
+        print("Gemini API key is loaded.")
+
+        client = genai.Client(api_key=api_key)
+
+        classified_messages, category_counts = classify_messages(client, messages)
+
+        report = {
+            "classified_messages": classified_messages,
+            "category_counts": category_counts
+        }
+
+        json_file_name = "ai_classification.json"
+        save_json_report(json_file_name, report)
+        print(f"{json_file_name} created successfully.")
+
+        csv_file_name = "ai_classification_report.csv"
+        save_csv_report(csv_file_name, classified_messages)
+        print(f"{csv_file_name} created successfully.")
+    else:
+        print("Gemini API key is missing.")
+
+
+if __name__ == "__main__":
+    main()
