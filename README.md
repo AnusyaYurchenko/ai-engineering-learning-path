@@ -136,6 +136,9 @@ Main concepts demonstrated:
 * Environment variables and `.env` files
 * API key protection with `.gitignore`
 * Python functions and loops
+* Code organization with reusable helper functions
+* Using a `main()` function
+* Using `if __name__ == "__main__"`
 * Keeping customer data connected to AI output
 * Cleaning model output with `.strip().lower()`
 * Counting category totals
