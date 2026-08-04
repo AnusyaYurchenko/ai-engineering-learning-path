@@ -31,6 +31,27 @@ The script keeps the customer name connected to each message and saves the resul
 8. The final JSON report is saved to `ai_classification.json`.
 9. A spreadsheet-friendly CSV report is saved to `ai_classification_report.csv`.
 
+## Code Structure
+
+The code is organized into reusable functions:
+
+```text
+create_classification_prompt()
+classify_with_gemini()
+load_messages_from_csv()
+classify_messages()
+save_json_report()
+save_csv_report()
+main()
+```
+
+The `main()` function controls the full workflow, and this block runs the project only when the file is executed directly:
+
+```python
+if __name__ == "__main__":
+    main()
+```
+
 ## Project Structure
 
 ```text
@@ -148,7 +169,9 @@ In this project, I practiced:
 - reading input data from a `.csv` file
 - using `csv.DictReader` to read rows as dictionaries
 - keeping customer names connected to messages
-- using functions for reusable code
+- organizing code into reusable functions
+- using a `main()` function
+- using `if __name__ == "__main__"`
 - looping through customer records
 - cleaning AI output with `.strip().lower()`
 - counting category totals
