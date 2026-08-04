@@ -123,7 +123,7 @@ Main concepts demonstrated:
 
 A beginner-friendly AI automation script that reads customer names and messages from `messages.csv` and uses Gemini to classify each message into invoice, order, or general categories.
 
-The script reads each CSV row as a dictionary, keeps the customer name connected to the message, sends each message to Gemini, counts category totals, and saves a structured report to `ai_classification.json`.
+The script reads each CSV row as a dictionary, keeps the customer name connected to the message, sends each message to Gemini, counts category totals, and saves reports to both `ai_classification.json` and `ai_classification_report.csv`.
 
 Project folder: `07-ai-message-classifier/`
 
@@ -140,6 +140,7 @@ Main concepts demonstrated:
 * Cleaning model output with `.strip().lower()`
 * Counting category totals
 * Saving AI classification results as JSON
+* Writing AI results to CSV with `csv.DictWriter`
 * Practical customer support automation logic
 
 ### 08 - AI Customer Support Triage
@@ -239,6 +240,7 @@ ai-engineering-learning-path/
   * messages.csv
   * messages.txt
   * ai_classification.json
+  * ai_classification_report.csv
 
 * 08-ai-customer-support-triage/
 
