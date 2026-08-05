@@ -109,7 +109,7 @@ def main():
             else:
                 output_file = "resolved_faq_answers.json"
 
-            save_json_file(output_file, result)
+            save_json_file(output_file, [result])
 
             print(f"Interactive FAQ answer saved to {output_file}.")
         else:
