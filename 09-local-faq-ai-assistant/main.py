@@ -39,47 +39,110 @@ FAQ:
 Customer question:
 {question}
 
-Return one short and clear answer.
+Return only valid JSON.
+Do not use markdown.
+Do not use ```json.
+Do not add explanation.
+
+JSON format:
+{{
+    "answer": "...",
+    "source": "...",
+    "confidence": "..."
+}}
+
+Rules:
+- source should be the FAQ section name: Returns, Shipping, Invoices, or Refunds
+- confidence should be high, medium, or low
+- if the answer is not in the FAQ, use:
+  - answer: I do not know based on the FAQ.
+  - source: unknown
+  - confidence: low
 """
 
 
 def ask_gemini(client, prompt):
-    response = client.models.generate_content(
-        model="gemini-3.1-flash-lite",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.1-flash-lite",
+            contents=prompt
+        )
 
-    answer = response.text.strip()
-    return answer
+        answer = response.text.strip()
+        return answer
+
+    except Exception as error:
+        print(f"API error occurred while asking Gemini: {error}")
+        return None
 
 
-def save_json_report(file_name, report):
+def parse_ai_json(answer):
+    try:
+        data = json.loads(answer)
+        return data
+    except json.JSONDecodeError as error:
+        print(f"JSON parsing error: {error}")
+        print("Raw AI answer:")
+        print(answer)
+        return None
+
+
+def save_json_file(file_name, data):
     with open(file_name, "w", encoding="utf-8") as file:
-        json.dump(report, file, indent=4)
+        json.dump(data, file, indent=4)
+
+
+def create_result(question, data):
+    if data:
+        source = data.get("source", "unknown")
+
+        return {
+            "question": question,
+            "answer": data.get("answer", "I do not know based on the FAQ."),
+            "source": source,
+            "confidence": data.get("confidence", "low"),
+            "needs_human_review": source.lower() == "unknown"
+        }
+
+    return {
+        "question": question,
+        "answer": "Could not generate or parse answer.",
+        "source": "unknown",
+        "confidence": "low",
+        "needs_human_review": True
+    }
 
 
 def main():
     faq_text = load_text_file("faq.txt")
     questions = load_questions("questions.txt")
-    file_name = "faq_answers_report.json"
+
+    if not questions:
+        print("No questions found.")
+        return
 
     if api_key:
         client = genai.Client(api_key=api_key)
 
-        answers_report = []
+        resolved_answers = []
+        human_review_queue = []
 
         for question in questions:
             prompt = create_faq_prompt(faq_text, question)
             answer = ask_gemini(client, prompt)
+            data = parse_ai_json(answer) if answer else None
+            result = create_result(question, data)
 
-            answers_report.append({
-                "question": question,
-                "answer": answer
-            })
+            if result["needs_human_review"]:
+                human_review_queue.append(result)
+            else:
+                resolved_answers.append(result)
 
-        save_json_report(file_name, answers_report)
+        save_json_file("resolved_faq_answers.json", resolved_answers)
+        save_json_file("human_review_queue.json", human_review_queue)
 
-        print("FAQ answers report saved.")
+        print("Resolved FAQ answers saved to resolved_faq_answers.json.")
+        print("Human review queue saved to human_review_queue.json.")
     else:
         print("Gemini API key is missing.")
 
