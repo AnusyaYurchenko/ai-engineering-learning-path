@@ -172,7 +172,7 @@ Main concepts demonstrated:
 
 A beginner-friendly local-file AI assistant that answers customer questions using a local FAQ file as business context.
 
-The script reads FAQ content from `faq.txt`, loads multiple customer questions from `questions.txt`, sends each question to Gemini with the FAQ context, and saves answers to `faq_answers_report.json`.
+The project includes a batch mode that reads questions from `questions.txt` and saves answers to `faq_answers_report.json`, plus an interactive mode that lets a user type one question in the terminal.
 
 Project folder: `09-local-faq-ai-assistant/`
 
@@ -184,6 +184,7 @@ Main concepts demonstrated:
 * Loading multiple customer questions from a file
 * Prompt templates with FAQ context
 * Looping through customer questions
+* Using `input()` for interactive questions
 * Saving AI answers as JSON
 * Code organization with reusable functions
 * Using a `main()` function
@@ -281,6 +282,7 @@ ai-engineering-learning-path/
 
   * README.md
   * main.py
+  * interactive_faq_assistant.py
   * requirements.txt
   * .env.example
   * .gitignore
