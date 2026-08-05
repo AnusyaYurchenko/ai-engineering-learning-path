@@ -8,7 +8,12 @@ This project shows how an AI assistant can answer customer questions using a loc
 
 ## What This Project Does
 
-The script reads a local FAQ from `faq.txt`, reads customer questions from `questions.txt`, sends each question to Gemini together with the FAQ context, and saves the answers to `faq_answers_report.json`.
+This project has two modes:
+
+- `main.py` reads multiple customer questions from `questions.txt` and saves all answers to `faq_answers_report.json`.
+- `interactive_faq_assistant.py` lets a user type one question in the terminal and prints the answer immediately.
+
+Both scripts use `faq.txt` as the local business knowledge file.
 
 The AI is instructed to answer only from the FAQ. If the answer is not available in the FAQ, it should say:
 
@@ -18,6 +23,8 @@ I do not know based on the FAQ.
 
 ## How It Works
 
+Batch mode with `main.py`:
+
 1. The script loads the Gemini API key from `.env`.
 2. The FAQ content is loaded from `faq.txt`.
 3. Customer questions are loaded from `questions.txt`.
@@ -26,9 +33,17 @@ I do not know based on the FAQ.
 6. Gemini answers each question using the FAQ context.
 7. The answers are saved to `faq_answers_report.json`.
 
+Interactive mode with `interactive_faq_assistant.py`:
+
+1. The script loads the Gemini API key from `.env`.
+2. The FAQ content is loaded from `faq.txt`.
+3. The user types one question in the terminal.
+4. Gemini answers using the FAQ context.
+5. The answer is printed in the terminal.
+
 ## Code Structure
 
-The code is organized into reusable functions:
+The batch script is organized into reusable functions:
 
 ```text
 load_text_file()
@@ -39,7 +54,16 @@ save_json_report()
 main()
 ```
 
-The `main()` function controls the full workflow, and this block runs the project only when the file is executed directly:
+The interactive script reuses the same basic pattern:
+
+```text
+load_text_file()
+create_faq_prompt()
+ask_gemini()
+main()
+```
+
+The `main()` function controls the workflow, and this block runs each script only when the file is executed directly:
 
 ```python
 if __name__ == "__main__":
@@ -51,6 +75,7 @@ if __name__ == "__main__":
 ```text
 09-local-faq-ai-assistant/
 ├── main.py
+├── interactive_faq_assistant.py
 ├── README.md
 ├── requirements.txt
 ├── .env.example
@@ -87,7 +112,7 @@ Invoices: Customers receive invoices by email.
 Refunds: Refunds are processed within 7 business days after approval.
 ```
 
-The questions file is:
+The batch questions file is:
 
 ```text
 questions.txt
@@ -110,19 +135,36 @@ pip install -r requirements.txt
 
 ## How To Run
 
+Run batch mode:
+
 ```powershell
 python main.py
 ```
 
+Run interactive mode:
+
+```powershell
+python interactive_faq_assistant.py
+```
+
 ## Example Output
+
+Batch mode:
 
 ```text
 FAQ answers report saved.
 ```
 
+Interactive mode:
+
+```text
+Ask a question: When will I get my refund?
+Refunds are processed within 7 business days after approval.
+```
+
 ## Output File
 
-The script creates:
+Batch mode creates:
 
 ```text
 faq_answers_report.json
@@ -152,6 +194,7 @@ In this project, I practiced:
 - creating prompt templates with variables
 - sending prompts to Gemini
 - looping through multiple customer questions
+- using `input()` for interactive terminal questions
 - saving AI answers as JSON
 - organizing code into reusable functions
 - using a `main()` function
