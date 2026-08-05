@@ -172,7 +172,7 @@ Main concepts demonstrated:
 
 A beginner-friendly local-file AI assistant that answers customer questions using a local FAQ file as business context.
 
-The project includes a batch mode that reads questions from `questions.txt` and saves answers to `faq_answers_report.json`, plus an interactive routing mode that saves known FAQ answers to `resolved_faq_answers.json` and unknown answers to `human_review_queue.json`.
+The project includes batch and interactive routing modes. Known FAQ answers are saved to `resolved_faq_answers.json`, and unknown answers are saved to `human_review_queue.json` for human review.
 
 Project folder: `09-local-faq-ai-assistant/`
 
@@ -295,7 +295,6 @@ ai-engineering-learning-path/
   * .gitignore
   * faq.txt
   * questions.txt
-  * faq_answers_report.json
   * human_review_queue.json
   * resolved_faq_answers.json
 
