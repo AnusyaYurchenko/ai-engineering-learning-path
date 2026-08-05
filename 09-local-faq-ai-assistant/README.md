@@ -10,7 +10,7 @@ This project shows how an AI assistant can answer customer questions using a loc
 
 This project has two modes:
 
-- `main.py` reads multiple customer questions from `questions.txt` and saves all answers to `faq_answers_report.json`.
+- `main.py` reads multiple customer questions from `questions.txt`, asks Gemini for structured answers, and routes the results into workflow files.
 - `interactive_faq_assistant.py` lets a user type one question in the terminal, asks Gemini for a structured JSON answer, and routes the result into the correct workflow file.
 
 Both scripts use `faq.txt` as the local business knowledge file.
@@ -35,15 +35,19 @@ resolved_faq_answers.json
 
 ## How It Works
 
-Batch mode with `main.py`:
+Batch routing mode with `main.py`:
 
 1. The script loads the Gemini API key from `.env`.
 2. The FAQ content is loaded from `faq.txt`.
 3. Customer questions are loaded from `questions.txt`.
 4. Python cleans empty lines from the questions file.
 5. A prompt is created for each question.
-6. Gemini answers each question using the FAQ context.
-7. The answers are saved to `faq_answers_report.json`.
+6. Gemini returns structured JSON with `answer`, `source`, and `confidence`.
+7. Python converts the JSON text into a dictionary with `json.loads()`.
+8. Python adds `needs_human_review` based on whether the source is `unknown`.
+9. Known answers are added to `resolved_answers`.
+10. Unknown answers are added to `human_review_queue`.
+11. The two lists are saved to `resolved_faq_answers.json` and `human_review_queue.json`.
 
 Interactive routing mode with `interactive_faq_assistant.py`:
 
@@ -55,18 +59,20 @@ Interactive routing mode with `interactive_faq_assistant.py`:
 6. If JSON parsing fails, the script prints the raw AI answer for debugging.
 7. The script uses `.get()` fallback values in case one key is missing.
 8. Python adds `needs_human_review` based on whether the source is `unknown`.
-9. The result is routed to `human_review_queue.json` or `resolved_faq_answers.json`.
+9. The result is saved as a one-item list in `human_review_queue.json` or `resolved_faq_answers.json`.
 
 ## Code Structure
 
-The batch script is organized into reusable functions:
+The batch routing script is organized into reusable functions:
 
 ```text
 load_text_file()
 load_questions()
 create_faq_prompt()
 ask_gemini()
-save_json_report()
+parse_ai_json()
+save_json_file()
+create_result()
 main()
 ```
 
@@ -100,7 +106,6 @@ if __name__ == "__main__":
 ├── .gitignore
 ├── faq.txt
 ├── questions.txt
-├── faq_answers_report.json
 ├── human_review_queue.json
 └── resolved_faq_answers.json
 ```
@@ -155,7 +160,7 @@ pip install -r requirements.txt
 
 ## How To Run
 
-Run batch mode:
+Run batch routing mode:
 
 ```powershell
 python main.py
@@ -169,10 +174,11 @@ python interactive_faq_assistant.py
 
 ## Example Output
 
-Batch mode:
+Batch routing mode:
 
 ```text
-FAQ answers report saved.
+Resolved FAQ answers saved to resolved_faq_answers.json.
+Human review queue saved to human_review_queue.json.
 ```
 
 Interactive routing mode for an unknown answer:
@@ -191,41 +197,39 @@ Interactive FAQ answer saved to resolved_faq_answers.json.
 
 ## Output Files
 
-Batch mode creates:
-
-```text
-faq_answers_report.json
-```
-
-Interactive routing mode creates one of these files:
+Both modes route answers into these files:
 
 ```text
 human_review_queue.json
 resolved_faq_answers.json
 ```
 
-Example human review result:
+Example human review queue:
 
 ```json
-{
-    "question": "Do you offer birthday discounts?",
-    "answer": "I do not know based on the FAQ.",
-    "source": "unknown",
-    "confidence": "low",
-    "needs_human_review": true
-}
+[
+    {
+        "question": "Do you offer birthday discounts?",
+        "answer": "I do not know based on the FAQ.",
+        "source": "unknown",
+        "confidence": "low",
+        "needs_human_review": true
+    }
+]
 ```
 
-Example resolved result:
+Example resolved answers:
 
 ```json
-{
-    "question": "When will I get my refund?",
-    "answer": "Refunds are processed within 7 business days after approval.",
-    "source": "Refunds",
-    "confidence": "high",
-    "needs_human_review": false
-}
+[
+    {
+        "question": "When will I get my refund?",
+        "answer": "Refunds are processed within 7 business days after approval.",
+        "source": "Refunds",
+        "confidence": "high",
+        "needs_human_review": false
+    }
+]
 ```
 
 ## What I Learned
