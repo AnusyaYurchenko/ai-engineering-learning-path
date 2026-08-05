@@ -1,0 +1,7 @@
+{
+    "question": "Do you offer birthday discounts?",
+    "answer": "I do not know based on the FAQ.",
+    "source": "unknown",
+    "confidence": "low",
+    "needs_human_review": true
+}
