@@ -11,7 +11,7 @@ This project shows how an AI assistant can answer customer questions using a loc
 This project has two modes:
 
 - `main.py` reads multiple customer questions from `questions.txt` and saves all answers to `faq_answers_report.json`.
-- `interactive_faq_assistant.py` lets a user type one question in the terminal and prints the answer immediately.
+- `interactive_faq_assistant.py` lets a user type one question in the terminal, asks Gemini for a structured JSON answer, and saves the result to `interactive_faq_answer.json`.
 
 Both scripts use `faq.txt` as the local business knowledge file.
 
@@ -38,8 +38,10 @@ Interactive mode with `interactive_faq_assistant.py`:
 1. The script loads the Gemini API key from `.env`.
 2. The FAQ content is loaded from `faq.txt`.
 3. The user types one question in the terminal.
-4. Gemini answers using the FAQ context.
-5. The answer is printed in the terminal.
+4. Gemini returns structured JSON with `answer`, `source`, and `confidence`.
+5. Python converts the JSON text into a dictionary with `json.loads()`.
+6. The script uses `.get()` fallback values in case one key is missing.
+7. The result is saved to `interactive_faq_answer.json`.
 
 ## Code Structure
 
@@ -54,12 +56,13 @@ save_json_report()
 main()
 ```
 
-The interactive script reuses the same basic pattern:
+The interactive script uses:
 
 ```text
 load_text_file()
 create_faq_prompt()
 ask_gemini()
+parse_ai_json()
 main()
 ```
 
@@ -82,7 +85,8 @@ if __name__ == "__main__":
 ├── .gitignore
 ├── faq.txt
 ├── questions.txt
-└── faq_answers_report.json
+├── faq_answers_report.json
+└── interactive_faq_answer.json
 ```
 
 ## Setup
@@ -159,10 +163,10 @@ Interactive mode:
 
 ```text
 Ask a question: When will I get my refund?
-Refunds are processed within 7 business days after approval.
+Interactive FAQ answer saved.
 ```
 
-## Output File
+## Output Files
 
 Batch mode creates:
 
@@ -170,7 +174,13 @@ Batch mode creates:
 faq_answers_report.json
 ```
 
-Example result:
+Interactive mode creates:
+
+```text
+interactive_faq_answer.json
+```
+
+Example batch result:
 
 ```json
 [
@@ -185,6 +195,17 @@ Example result:
 ]
 ```
 
+Example interactive result:
+
+```json
+{
+    "question": "When will I get my refund?",
+    "answer": "Refunds are processed within 7 business days after approval.",
+    "source": "Refunds",
+    "confidence": "high"
+}
+```
+
 ## What I Learned
 
 In this project, I practiced:
@@ -195,6 +216,10 @@ In this project, I practiced:
 - sending prompts to Gemini
 - looping through multiple customer questions
 - using `input()` for interactive terminal questions
+- asking AI for structured JSON output
+- converting JSON text with `json.loads()`
+- handling invalid JSON with `json.JSONDecodeError`
+- using `.get()` fallback values for safer dictionary access
 - saving AI answers as JSON
 - organizing code into reusable functions
 - using a `main()` function
