@@ -1,0 +1,4 @@
+Returns: Customers can return items within 14 days.
+Shipping: Delivery usually takes 3-5 business days.
+Invoices: Customers receive invoices by email.
+Refunds: Refunds are processed within 7 business days after approval.
