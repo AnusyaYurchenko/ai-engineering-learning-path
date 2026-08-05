@@ -168,6 +168,29 @@ Main concepts demonstrated:
 * Saving AI triage reports as JSON
 * Practical customer support automation logic
 
+### 09 - Local FAQ AI Assistant
+
+A beginner-friendly local-file AI assistant that answers customer questions using a local FAQ file as business context.
+
+The script reads FAQ content from `faq.txt`, loads multiple customer questions from `questions.txt`, sends each question to Gemini with the FAQ context, and saves answers to `faq_answers_report.json`.
+
+Project folder: `09-local-faq-ai-assistant/`
+
+Main concepts demonstrated:
+
+* Gemini API integration with Python
+* Using a local file as AI context
+* Reading `.txt` files
+* Loading multiple customer questions from a file
+* Prompt templates with FAQ context
+* Looping through customer questions
+* Saving AI answers as JSON
+* Code organization with reusable functions
+* Using a `main()` function
+* Using `if __name__ == "__main__"`
+* Beginner RAG-style thinking
+* Practical FAQ automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -253,6 +276,17 @@ ai-engineering-learning-path/
   * .env.example
   * .gitignore
   * ai_triage_report.json
+
+* 09-local-faq-ai-assistant/
+
+  * README.md
+  * main.py
+  * requirements.txt
+  * .env.example
+  * .gitignore
+  * faq.txt
+  * questions.txt
+  * faq_answers_report.json
 
 ## Future Projects
 
