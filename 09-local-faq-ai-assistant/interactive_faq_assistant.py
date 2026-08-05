@@ -16,6 +16,7 @@ def load_text_file(file_name):
 def create_faq_prompt(faq_text, question):
     return f"""
 Use only this FAQ to answer the customer question.
+If the answer is not in the FAQ, say: I do not know based on the FAQ.
 
 FAQ:
 {faq_text}
@@ -23,10 +24,17 @@ FAQ:
 Customer question:
 {question}
 
-Return only valid JSON with:
-- answer
-- source
-- confidence
+Return only valid JSON.
+Do not use markdown.
+Do not use ```json.
+Do not add explanation.
+
+JSON format:
+{{
+    "answer": "...",
+    "source": "...",
+    "confidence": "..."
+}}
 
 Rules:
 - source should be the FAQ section name: Returns, Shipping, Invoices, or Refunds
@@ -59,6 +67,8 @@ def parse_ai_json(answer):
         return data
     except json.JSONDecodeError as error:
         print(f"JSON parsing error: {error}")
+        print("Raw AI answer:")
+        print(answer)
         return None
 
 
@@ -78,11 +88,14 @@ def main():
         data = parse_ai_json(answer)
 
         if data:
+            source = data.get("source", "unknown")
+
             result = {
                 "question": question,
                 "answer": data.get("answer", "I do not know based on the FAQ."),
-                "source": data.get("source", "unknown"),
-                "confidence": data.get("confidence", "low")
+                "source": source,
+                "confidence": data.get("confidence", "low"),
+                "needs_human_review": source.lower() == "unknown"
             }
 
             with open("interactive_faq_answer.json", "w", encoding="utf-8") as file:
