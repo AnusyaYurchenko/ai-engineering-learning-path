@@ -72,6 +72,11 @@ def parse_ai_json(answer):
         return None
 
 
+def save_json_file(file_name, data):
+    with open(file_name, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
+
+
 def main():
     faq_text = load_text_file("faq.txt")
     question = input("Ask a question: ")
@@ -89,19 +94,24 @@ def main():
 
         if data:
             source = data.get("source", "unknown")
+            needs_human_review = source.lower() == "unknown"
 
             result = {
                 "question": question,
                 "answer": data.get("answer", "I do not know based on the FAQ."),
                 "source": source,
                 "confidence": data.get("confidence", "low"),
-                "needs_human_review": source.lower() == "unknown"
+                "needs_human_review": needs_human_review
             }
 
-            with open("interactive_faq_answer.json", "w", encoding="utf-8") as file:
-                json.dump(result, file, indent=4)
+            if result["needs_human_review"]:
+                output_file = "human_review_queue.json"
+            else:
+                output_file = "resolved_faq_answers.json"
 
-            print("Interactive FAQ answer saved.")
+            save_json_file(output_file, result)
+
+            print(f"Interactive FAQ answer saved to {output_file}.")
         else:
             print("Failed to parse the AI response.")
     else:
