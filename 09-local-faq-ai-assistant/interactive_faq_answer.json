@@ -1,6 +1,7 @@
 {
-    "question": "When will I get my refund?",
-    "answer": "Refunds are processed within 7 business days after approval.",
-    "source": "Refunds",
-    "confidence": "high"
+    "question": "Do you offer birthday discounts?",
+    "answer": "I do not know based on the FAQ.",
+    "source": "unknown",
+    "confidence": "low",
+    "needs_human_review": true
 }
