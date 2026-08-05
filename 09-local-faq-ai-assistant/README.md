@@ -11,7 +11,7 @@ This project shows how an AI assistant can answer customer questions using a loc
 This project has two modes:
 
 - `main.py` reads multiple customer questions from `questions.txt` and saves all answers to `faq_answers_report.json`.
-- `interactive_faq_assistant.py` lets a user type one question in the terminal, asks Gemini for a structured JSON answer, and saves the result to `interactive_faq_answer.json`.
+- `interactive_faq_assistant.py` lets a user type one question in the terminal, asks Gemini for a structured JSON answer, and routes the result into the correct workflow file.
 
 Both scripts use `faq.txt` as the local business knowledge file.
 
@@ -21,10 +21,16 @@ The AI is instructed to answer only from the FAQ. If the answer is not available
 I do not know based on the FAQ.
 ```
 
-When the source is `unknown`, the interactive assistant also adds:
+If the source is `unknown`, Python marks the answer for human review and saves it to:
 
-```json
-"needs_human_review": true
+```text
+human_review_queue.json
+```
+
+If the source is known, Python saves the answer to:
+
+```text
+resolved_faq_answers.json
 ```
 
 ## How It Works
@@ -39,7 +45,7 @@ Batch mode with `main.py`:
 6. Gemini answers each question using the FAQ context.
 7. The answers are saved to `faq_answers_report.json`.
 
-Interactive mode with `interactive_faq_assistant.py`:
+Interactive routing mode with `interactive_faq_assistant.py`:
 
 1. The script loads the Gemini API key from `.env`.
 2. The FAQ content is loaded from `faq.txt`.
@@ -48,8 +54,8 @@ Interactive mode with `interactive_faq_assistant.py`:
 5. Python converts the JSON text into a dictionary with `json.loads()`.
 6. If JSON parsing fails, the script prints the raw AI answer for debugging.
 7. The script uses `.get()` fallback values in case one key is missing.
-8. If the source is `unknown`, the script marks the answer for human review.
-9. The result is saved to `interactive_faq_answer.json`.
+8. Python adds `needs_human_review` based on whether the source is `unknown`.
+9. The result is routed to `human_review_queue.json` or `resolved_faq_answers.json`.
 
 ## Code Structure
 
@@ -64,13 +70,14 @@ save_json_report()
 main()
 ```
 
-The interactive script uses:
+The interactive routing script uses:
 
 ```text
 load_text_file()
 create_faq_prompt()
 ask_gemini()
 parse_ai_json()
+save_json_file()
 main()
 ```
 
@@ -94,7 +101,8 @@ if __name__ == "__main__":
 ├── faq.txt
 ├── questions.txt
 ├── faq_answers_report.json
-└── interactive_faq_answer.json
+├── human_review_queue.json
+└── resolved_faq_answers.json
 ```
 
 ## Setup
@@ -153,7 +161,7 @@ Run batch mode:
 python main.py
 ```
 
-Run interactive mode:
+Run interactive routing mode:
 
 ```powershell
 python interactive_faq_assistant.py
@@ -167,11 +175,18 @@ Batch mode:
 FAQ answers report saved.
 ```
 
-Interactive mode:
+Interactive routing mode for an unknown answer:
 
 ```text
 Ask a question: Do you offer birthday discounts?
-Interactive FAQ answer saved.
+Interactive FAQ answer saved to human_review_queue.json.
+```
+
+Interactive routing mode for a known answer:
+
+```text
+Ask a question: When will I get my refund?
+Interactive FAQ answer saved to resolved_faq_answers.json.
 ```
 
 ## Output Files
@@ -182,28 +197,14 @@ Batch mode creates:
 faq_answers_report.json
 ```
 
-Interactive mode creates:
+Interactive routing mode creates one of these files:
 
 ```text
-interactive_faq_answer.json
+human_review_queue.json
+resolved_faq_answers.json
 ```
 
-Example batch result:
-
-```json
-[
-    {
-        "question": "When will I get my refund?",
-        "answer": "Refunds are processed within 7 business days after approval."
-    },
-    {
-        "question": "Can I return my order after 30 days?",
-        "answer": "I do not know based on the FAQ."
-    }
-]
-```
-
-Example interactive result:
+Example human review result:
 
 ```json
 {
@@ -212,6 +213,18 @@ Example interactive result:
     "source": "unknown",
     "confidence": "low",
     "needs_human_review": true
+}
+```
+
+Example resolved result:
+
+```json
+{
+    "question": "When will I get my refund?",
+    "answer": "Refunds are processed within 7 business days after approval.",
+    "source": "Refunds",
+    "confidence": "high",
+    "needs_human_review": false
 }
 ```
 
@@ -232,6 +245,7 @@ In this project, I practiced:
 - printing raw AI output for debugging
 - using `.get()` fallback values for safer dictionary access
 - adding a `needs_human_review` flag for unknown answers
+- routing AI results into separate workflow files
 - saving AI answers as JSON
 - organizing code into reusable functions
 - using a `main()` function
@@ -239,6 +253,6 @@ In this project, I practiced:
 
 ## Business Value
 
-This project is the beginner version of a local FAQ assistant.
+This project is the beginner version of a local FAQ assistant with workflow routing.
 
 A larger version could answer customer questions from company documents, help support teams respond faster, reduce repeated manual work, and route unknown answers to a human instead of guessing.
