@@ -1,7 +1,23 @@
-{
-    "question": "When will I get my refund?",
-    "answer": "Refunds are processed within 7 business days after approval.",
-    "source": "Refunds",
-    "confidence": "high",
-    "needs_human_review": false
-}
+[
+    {
+        "question": "When will I get my refund?",
+        "answer": "Refunds are processed within 7 business days after approval.",
+        "source": "Refunds",
+        "confidence": "high",
+        "needs_human_review": false
+    },
+    {
+        "question": "How long does delivery take?",
+        "answer": "Delivery usually takes 3-5 business days.",
+        "source": "Shipping",
+        "confidence": "high",
+        "needs_human_review": false
+    },
+    {
+        "question": "Where can I find my invoice?",
+        "answer": "Customers receive invoices by email.",
+        "source": "Invoices",
+        "confidence": "high",
+        "needs_human_review": false
+    }
+]
