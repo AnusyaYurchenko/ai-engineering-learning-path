@@ -21,6 +21,12 @@ The AI is instructed to answer only from the FAQ. If the answer is not available
 I do not know based on the FAQ.
 ```
 
+When the source is `unknown`, the interactive assistant also adds:
+
+```json
+"needs_human_review": true
+```
+
 ## How It Works
 
 Batch mode with `main.py`:
@@ -38,10 +44,12 @@ Interactive mode with `interactive_faq_assistant.py`:
 1. The script loads the Gemini API key from `.env`.
 2. The FAQ content is loaded from `faq.txt`.
 3. The user types one question in the terminal.
-4. Gemini returns structured JSON with `answer`, `source`, and `confidence`.
+4. Gemini is asked to return only valid JSON with `answer`, `source`, and `confidence`.
 5. Python converts the JSON text into a dictionary with `json.loads()`.
-6. The script uses `.get()` fallback values in case one key is missing.
-7. The result is saved to `interactive_faq_answer.json`.
+6. If JSON parsing fails, the script prints the raw AI answer for debugging.
+7. The script uses `.get()` fallback values in case one key is missing.
+8. If the source is `unknown`, the script marks the answer for human review.
+9. The result is saved to `interactive_faq_answer.json`.
 
 ## Code Structure
 
@@ -162,7 +170,7 @@ FAQ answers report saved.
 Interactive mode:
 
 ```text
-Ask a question: When will I get my refund?
+Ask a question: Do you offer birthday discounts?
 Interactive FAQ answer saved.
 ```
 
@@ -199,10 +207,11 @@ Example interactive result:
 
 ```json
 {
-    "question": "When will I get my refund?",
-    "answer": "Refunds are processed within 7 business days after approval.",
-    "source": "Refunds",
-    "confidence": "high"
+    "question": "Do you offer birthday discounts?",
+    "answer": "I do not know based on the FAQ.",
+    "source": "unknown",
+    "confidence": "low",
+    "needs_human_review": true
 }
 ```
 
@@ -213,13 +222,16 @@ In this project, I practiced:
 - reading local `.txt` files with Python
 - using a local file as AI context
 - creating prompt templates with variables
+- escaping literal JSON braces inside f-strings with `{{` and `}}`
 - sending prompts to Gemini
 - looping through multiple customer questions
 - using `input()` for interactive terminal questions
 - asking AI for structured JSON output
 - converting JSON text with `json.loads()`
 - handling invalid JSON with `json.JSONDecodeError`
+- printing raw AI output for debugging
 - using `.get()` fallback values for safer dictionary access
+- adding a `needs_human_review` flag for unknown answers
 - saving AI answers as JSON
 - organizing code into reusable functions
 - using a `main()` function
@@ -229,4 +241,4 @@ In this project, I practiced:
 
 This project is the beginner version of a local FAQ assistant.
 
-A larger version could answer customer questions from company documents, help support teams respond faster, reduce repeated manual work, and become the base for a future document Q&A or RAG-style assistant.
+A larger version could answer customer questions from company documents, help support teams respond faster, reduce repeated manual work, and route unknown answers to a human instead of guessing.
