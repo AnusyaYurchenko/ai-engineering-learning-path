@@ -59,7 +59,7 @@ Interactive routing mode with `interactive_faq_assistant.py`:
 6. If JSON parsing fails, the script prints the raw AI answer for debugging.
 7. The script uses `.get()` fallback values in case one key is missing.
 8. Python adds `needs_human_review` based on whether the source is `unknown`.
-9. The result is saved as a one-item list in `human_review_queue.json` or `resolved_faq_answers.json`.
+9. The result is appended to `human_review_queue.json` or `resolved_faq_answers.json`.
 
 ## Code Structure
 
@@ -83,7 +83,10 @@ load_text_file()
 create_faq_prompt()
 ask_gemini()
 parse_ai_json()
+load_json_list()
+append_json_result()
 save_json_file()
+create_result()
 main()
 ```
 
@@ -97,7 +100,7 @@ if __name__ == "__main__":
 ## Project Structure
 
 ```text
-09-local-faq-ai-assistant/
+07-local-faq-ai-assistant/
 ├── main.py
 ├── interactive_faq_assistant.py
 ├── README.md
@@ -250,6 +253,7 @@ In this project, I practiced:
 - using `.get()` fallback values for safer dictionary access
 - adding a `needs_human_review` flag for unknown answers
 - routing AI results into separate workflow files
+- appending interactive answers to existing workflow files
 - saving AI answers as JSON
 - organizing code into reusable functions
 - using a `main()` function

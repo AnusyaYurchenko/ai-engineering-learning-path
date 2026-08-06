@@ -27,9 +27,10 @@ The script keeps the customer name connected to each message and saves the resul
 4. A prompt is created for each customer message.
 5. Gemini classifies the message.
 6. Python cleans the AI response with `.strip().lower()`.
-7. The script counts how many messages are in each category.
-8. The final JSON report is saved to `ai_classification.json`.
-9. A spreadsheet-friendly CSV report is saved to `ai_classification_report.csv`.
+7. If the Gemini request fails or returns an unexpected category, Python uses a safe fallback.
+8. The script counts how many messages are in each category.
+9. The final JSON report is saved to `ai_classification.json`.
+10. A spreadsheet-friendly CSV report is saved to `ai_classification_report.csv`.
 
 ## Code Structure
 
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 ## Project Structure
 
 ```text
-07-ai-message-classifier/
+05-ai-message-classifier/
 ├── main.py
 ├── README.md
 ├── requirements.txt
@@ -177,6 +178,7 @@ In this project, I practiced:
 - counting category totals
 - saving structured AI results as JSON
 - writing AI results to CSV with `csv.DictWriter`
+- adding safe fallback behavior for unexpected AI output
 
 ## Business Value
 

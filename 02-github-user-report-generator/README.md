@@ -23,15 +23,17 @@ For each username, the script:
 
 1. Builds a GitHub API URL.
 2. Sends a request with `requests.get()`.
-3. Checks if the response status code is `200`.
-4. Converts the JSON response into a Python dictionary.
-5. Writes the user data into `github_users_report.txt`.
-6. Writes a safe error message if the user does not exist.
+3. Uses a timeout so the request does not hang forever.
+4. Handles connection errors safely with `try / except`.
+5. Checks if the response status code is `200`.
+6. Converts the JSON response into a Python dictionary.
+7. Writes the user data into `github_users_report.txt`.
+8. Writes a safe error message if the user does not exist or the request fails.
 
 ## Project Files
 
 ```text
-04-github-user-report-generator/
+02-github-user-report-generator/
   main.py
   helpers.py
   requirements.txt
@@ -99,6 +101,8 @@ In this project, I practiced:
 - Installing and using the `requests` package
 - Building API URLs with f-strings
 - Checking API status codes
+- Using request timeouts
+- Handling request errors safely
 - Converting JSON responses into Python dictionaries
 - Using functions to organize code
 - Looping through a list of usernames

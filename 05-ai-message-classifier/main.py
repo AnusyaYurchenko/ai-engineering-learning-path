@@ -8,6 +8,8 @@ load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
 
+VALID_CATEGORIES = ["invoice", "order", "general"]
+
 
 def create_classification_prompt(message):
     return f"""
@@ -29,13 +31,22 @@ Return only the category name.
 def classify_with_gemini(client, message):
     prompt = create_classification_prompt(message)
 
-    response = client.models.generate_content(
-        model="gemini-3.1-flash-lite",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.1-flash-lite",
+            contents=prompt
+        )
+    except Exception as error:
+        print(f"Gemini API error for message: {message}")
+        print(error)
+        return "general"
 
     category = response.text.strip().lower()
-    return category
+
+    if category in VALID_CATEGORIES:
+        return category
+
+    return "general"
 
 
 def load_messages_from_csv(file_name):
@@ -71,10 +82,7 @@ def classify_messages(client, messages):
             "category": category
         })
 
-        if category in category_counts:
-            category_counts[category] += 1
-        else:
-            category_counts["general"] += 1
+        category_counts[category] += 1
 
     return classified_messages, category_counts
 

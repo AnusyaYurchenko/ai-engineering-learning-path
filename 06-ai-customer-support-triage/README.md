@@ -36,7 +36,7 @@ The script also includes basic reliability handling so failed or unclear AI resp
 ## Project Structure
 
 ```text
-08-ai-customer-support-triage/
+06-ai-customer-support-triage/
 ├── main.py
 ├── README.md
 ├── requirements.txt
@@ -120,6 +120,7 @@ In this project, I practiced:
 - keeping failed messages in the final report
 - using `.env` for API key safety
 - saving AI results to a JSON report
+- organizing script execution with `main()`
 - building a realistic customer support automation workflow
 
 ## Business Value

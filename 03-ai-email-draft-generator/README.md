@@ -18,9 +18,8 @@ The script:
 ## Project Structure
 
 ```text
-ai-email-draft-generator/
+03-ai-email-draft-generator/
   main.py
-  .env
   .env.example
   .gitignore
   requirements.txt
@@ -91,6 +90,7 @@ Best regards,
 - How to create reusable prompt templates
 - How to save AI-generated output to a text file
 - How to handle API errors with try / except
+- How to organize script execution with main()
 ```
 
 ## Business Value

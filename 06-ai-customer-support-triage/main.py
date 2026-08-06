@@ -21,7 +21,10 @@ Analyze this customer message and return JSON with:
 Message:
 {message}
 
-Return only valid JSON. Do not add explanation.
+Return only valid JSON.
+Do not use markdown.
+Do not use ```json.
+Do not add explanation.
 """
 
 
@@ -50,47 +53,60 @@ def parse_ai_json(result_text):
         return None
 
 
-messages = [
-    "I was charged twice and need a refund.",
-    "Where is my package?",
-    "Thank you for quick support.",
-    "My order arrived damaged and I am angry."
-]
+def create_triage_result(message, result):
+    if result:
+        return {
+            "message": message,
+            "category": result.get("category", "unknown"),
+            "confidence": result.get("confidence", "unknown"),
+            "priority": result.get("priority", "unknown"),
+            "suggested_action": result.get("suggested_action", "Needs human review")
+        }
 
-triage_results = []
-report_file = "ai_triage_report.json"
+    return {
+        "message": message,
+        "category": "unknown",
+        "confidence": "low",
+        "priority": "medium",
+        "suggested_action": "Needs human review"
+    }
 
-if api_key:
+
+def save_json_report(file_name, report):
+    with open(file_name, "w", encoding="utf-8") as file:
+        json.dump(report, file, indent=4)
+
+
+def main():
+    messages = [
+        "I was charged twice and need a refund.",
+        "Where is my package?",
+        "Thank you for quick support.",
+        "My order arrived damaged and I am angry."
+    ]
+
+    triage_results = []
+    report_file = "ai_triage_report.json"
+
+    if not api_key:
+        print("API key is missing. Skipping classification.")
+        return
+
     print("API key is loaded.")
-
     client = genai.Client(api_key=api_key)
 
     for message in messages:
         result_text = triage_with_gemini(client, message)
         result = parse_ai_json(result_text) if result_text else None
 
-        if result:
-            triage_results.append({
-                "message": message,
-                "category": result.get("category", "unknown"),
-                "confidence": result.get("confidence", "unknown"),
-                "priority": result.get("priority", "unknown"),
-                "suggested_action": result.get("suggested_action", "Needs human review")
-            })
-        else:
+        if not result:
             print(f"Could not parse AI response for message: {message}")
 
-            triage_results.append({
-                "message": message,
-                "category": "unknown",
-                "confidence": "low",
-                "priority": "medium",
-                "suggested_action": "Needs human review"
-            })
+        triage_results.append(create_triage_result(message, result))
 
-    with open(report_file, "w", encoding="utf-8") as file:
-        json.dump(triage_results, file, indent=4)
-
+    save_json_report(report_file, triage_results)
     print("AI triage report saved.")
-else:
-    print("API key is missing. Skipping classification.")
+
+
+if __name__ == "__main__":
+    main()

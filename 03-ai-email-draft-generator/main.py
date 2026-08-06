@@ -19,16 +19,18 @@ Rules:
 """
 
 
-invoice = {
-    "customer": "Maria",
-    "total": 300
-}
+def main():
+    invoice = {
+        "customer": "Maria",
+        "total": 300
+    }
 
-prompt = create_invoice_prompt(invoice)
+    prompt = create_invoice_prompt(invoice)
 
-if not api_key:
-    print("Gemini API key missing")
-else:
+    if not api_key:
+        print("Gemini API key missing")
+        return
+
     client = genai.Client(api_key=api_key)
 
     try:
@@ -45,3 +47,7 @@ else:
     except Exception as error:
         print("Could not generate email draft.")
         print(error)
+
+
+if __name__ == "__main__":
+    main()

@@ -24,7 +24,7 @@ Then it saves the final email into `email_to_send.txt`.
 ## Project Files
 
 ```text
-email-template-generator/
+01-email-template-generator/
     main.py
     email_template.txt
     email_to_send.txt

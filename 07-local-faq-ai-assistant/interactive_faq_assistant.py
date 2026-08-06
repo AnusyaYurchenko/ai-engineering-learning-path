@@ -58,7 +58,7 @@ def ask_gemini(client, prompt):
 
     except Exception as error:
         print(f"API error occurred while asking Gemini: {error}")
-        return "Could not generate answer."
+        return None
 
 
 def parse_ai_json(answer):
@@ -77,6 +77,49 @@ def save_json_file(file_name, data):
         json.dump(data, file, indent=4)
 
 
+def load_json_list(file_name):
+    if not os.path.exists(file_name):
+        return []
+
+    try:
+        with open(file_name, "r", encoding="utf-8") as file:
+            data = json.load(file)
+    except json.JSONDecodeError:
+        return []
+
+    if isinstance(data, list):
+        return data
+
+    return []
+
+
+def append_json_result(file_name, result):
+    existing_results = load_json_list(file_name)
+    existing_results.append(result)
+    save_json_file(file_name, existing_results)
+
+
+def create_result(question, data):
+    if data:
+        source = data.get("source", "unknown")
+
+        return {
+            "question": question,
+            "answer": data.get("answer", "I do not know based on the FAQ."),
+            "source": source,
+            "confidence": data.get("confidence", "low"),
+            "needs_human_review": source.lower() == "unknown"
+        }
+
+    return {
+        "question": question,
+        "answer": "Could not generate or parse answer.",
+        "source": "unknown",
+        "confidence": "low",
+        "needs_human_review": True
+    }
+
+
 def main():
     faq_text = load_text_file("faq.txt")
     question = input("Ask a question: ")
@@ -85,37 +128,25 @@ def main():
         print("No question provided.")
         return
 
-    if api_key:
-        client = genai.Client(api_key=api_key)
-
-        prompt = create_faq_prompt(faq_text, question)
-        answer = ask_gemini(client, prompt)
-        data = parse_ai_json(answer)
-
-        if data:
-            source = data.get("source", "unknown")
-            needs_human_review = source.lower() == "unknown"
-
-            result = {
-                "question": question,
-                "answer": data.get("answer", "I do not know based on the FAQ."),
-                "source": source,
-                "confidence": data.get("confidence", "low"),
-                "needs_human_review": needs_human_review
-            }
-
-            if result["needs_human_review"]:
-                output_file = "human_review_queue.json"
-            else:
-                output_file = "resolved_faq_answers.json"
-
-            save_json_file(output_file, [result])
-
-            print(f"Interactive FAQ answer saved to {output_file}.")
-        else:
-            print("Failed to parse the AI response.")
-    else:
+    if not api_key:
         print("Gemini API key is missing.")
+        return
+
+    client = genai.Client(api_key=api_key)
+
+    prompt = create_faq_prompt(faq_text, question)
+    answer = ask_gemini(client, prompt)
+    data = parse_ai_json(answer) if answer else None
+    result = create_result(question, data)
+
+    if result["needs_human_review"]:
+        output_file = "human_review_queue.json"
+    else:
+        output_file = "resolved_faq_answers.json"
+
+    append_json_result(output_file, result)
+
+    print(f"Interactive FAQ answer saved to {output_file}.")
 
 
 if __name__ == "__main__":

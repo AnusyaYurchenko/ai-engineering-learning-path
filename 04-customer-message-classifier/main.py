@@ -12,34 +12,46 @@ def classify_message(message):
         return "general"
 
 
-messages = [
-    "I need help with my invoice.",
-    "Where is my order?",
-    "Thanks for your help.",
-    "Please send my receipt.",
-    "My package has not arrived.",
-    "I cannot pay my bill."
-]
+def classify_messages(messages):
+    classified_messages = []
 
-classified_messages = []
+    category_counts = {
+        "invoice": 0,
+        "order": 0,
+        "general": 0
+    }
 
-category_counts = {
-    "invoice": 0,
-    "order": 0,
-    "general": 0
-}
+    for message in messages:
+        category = classify_message(message)
+        classified_messages.append({"message": message, "category": category})
+        category_counts[category] += 1
 
-for message in messages:
-    category = classify_message(message)
-    classified_messages.append({"message": message, "category": category})
-    category_counts[category] += 1
+    return {
+        "classified_messages": classified_messages,
+        "category_counts": category_counts
+    }
 
-report = {
-    "classified_messages": classified_messages,
-    "category_counts": category_counts
-}
 
-with open("message_classification_report.json", "w", encoding="utf-8") as file:
-    json.dump(report, file, indent=4)
+def save_json_report(file_name, report):
+    with open(file_name, "w", encoding="utf-8") as file:
+        json.dump(report, file, indent=4)
 
-print("Message classification report saved.")
+
+def main():
+    messages = [
+        "I need help with my invoice.",
+        "Where is my order?",
+        "Thanks for your help.",
+        "Please send my receipt.",
+        "My package has not arrived.",
+        "I cannot pay my bill."
+    ]
+
+    report = classify_messages(messages)
+    save_json_report("message_classification_report.json", report)
+
+    print("Message classification report saved.")
+
+
+if __name__ == "__main__":
+    main()
