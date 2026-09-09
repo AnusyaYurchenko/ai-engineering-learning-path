@@ -176,6 +176,27 @@ Main concepts demonstrated:
 * Saving API results as JSON
 * Practical product data automation logic
 
+### 09 - Weather API Report
+
+A beginner-friendly API automation script that gets weather forecast data from OpenWeather and saves a structured weather report.
+
+The script loads the API key from `.env`, sends city and unit parameters to the API, checks whether the request worked, reads nested forecast data, and saves a short report to `weather_report.json`.
+
+Project folder: `09-weather-api-report/`
+
+Main concepts demonstrated:
+
+* External API requests with `requests`
+* Protecting API keys with `.env`
+* Loading environment variables with `python-dotenv`
+* Sending query parameters with `params=`
+* Using `timeout=10` for safer API calls
+* Checking API response status codes
+* Reading nested JSON forecast data
+* Using `.get()` fallback values
+* Saving API results as JSON
+* Practical weather report automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -248,12 +269,19 @@ ai-engineering-learning-path/
 │   ├── questions.txt
 │   ├── human_review_queue.json
 │   └── resolved_faq_answers.json
-└── 08-product-lookup-api/
+├── 08-product-lookup-api/
+│   ├── README.md
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── .gitignore
+│   └── product_lookup_report.json
+└── 09-weather-api-report/
     ├── README.md
     ├── main.py
     ├── requirements.txt
+    ├── .env.example
     ├── .gitignore
-    └── product_lookup_report.json
+    └── weather_report.json
 ```
 
 ## Future Projects
