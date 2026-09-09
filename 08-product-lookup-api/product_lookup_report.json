@@ -2,13 +2,13 @@
     {
         "label": "Raspberry lemonade",
         "upc": "025000044908",
-        "title": "Sample product title from API",
-        "brand": "Sample product brand from API"
+        "title": "Simply Lemonade with Raspberry Bottle, 52 fl oz",
+        "brand": "Simply"
     },
     {
         "label": "Ridged potato chips",
         "upc": "028400516686",
-        "title": "Sample product title from API",
-        "brand": "Sample product brand from API"
+        "title": "Ruffles Potato Chips Original",
+        "brand": "Ruffles"
     }
 ]
