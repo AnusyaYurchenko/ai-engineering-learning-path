@@ -156,12 +156,34 @@ Main concepts demonstrated:
 * Beginner RAG-style thinking
 * Practical FAQ automation logic
 
+### 08 - Product Lookup API
+
+A beginner-friendly API automation script that looks up product information from UPC barcode numbers and saves a structured product report.
+
+The script sends UPC codes as API request parameters, checks whether the request worked, reads JSON data from the API response, extracts product title and brand, and saves the result to `product_lookup_report.json`.
+
+Project folder: `08-product-lookup-api/`
+
+Main concepts demonstrated:
+
+* External API requests with `requests`
+* Sending query parameters with `params=`
+* Using `timeout=10` for safer API calls
+* Checking API response status codes
+* Reading JSON responses as Python dictionaries
+* Working with nested API data
+* Using `.get()` fallback values
+* Saving API results as JSON
+* Practical product data automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
 
 * AI engineering
 * Python development
+* External API requests
+* JSON and CSV report generation
 * Large Language Model integration
 * Gemini API usage
 * Prompt engineering
@@ -215,23 +237,31 @@ ai-engineering-learning-path/
 │   ├── .env.example
 │   ├── .gitignore
 │   └── ai_triage_report.json
-└── 07-local-faq-ai-assistant/
+├── 07-local-faq-ai-assistant/
+│   ├── README.md
+│   ├── main.py
+│   ├── interactive_faq_assistant.py
+│   ├── requirements.txt
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── faq.txt
+│   ├── questions.txt
+│   ├── human_review_queue.json
+│   └── resolved_faq_answers.json
+└── 08-product-lookup-api/
     ├── README.md
     ├── main.py
-    ├── interactive_faq_assistant.py
     ├── requirements.txt
-    ├── .env.example
     ├── .gitignore
-    ├── faq.txt
-    ├── questions.txt
-    ├── human_review_queue.json
-    └── resolved_faq_answers.json
+    └── product_lookup_report.json
 ```
 
 ## Future Projects
 
 Planned project areas:
 
+* Web scraping reports
+* Browser automation with Selenium
 * AI agents
 * RAG applications
 * Business automation tools
