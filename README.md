@@ -197,6 +197,26 @@ Main concepts demonstrated:
 * Saving API results as JSON
 * Practical weather report automation logic
 
+### 10 - File Organizer Automation
+
+A beginner-friendly file automation script that organizes files into folders based on their file type.
+
+The script checks files in the current folder, chooses a destination folder from extension rules, creates folders when needed, avoids overwriting duplicate file names, moves files, and prints a short report.
+
+Project folder: `10-file-organizer-automation/`
+
+Main concepts demonstrated:
+
+* File and folder automation with Python
+* Working with `pathlib.Path`
+* Reading file extensions with `.suffix`
+* Creating folders with `.mkdir()`
+* Moving files with `.rename()`
+* Using dictionaries for category rules
+* Avoiding duplicate file name overwrites
+* Writing clean reusable functions
+* Practical office workflow automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -204,6 +224,7 @@ This portfolio is focused on:
 * AI engineering
 * Python development
 * External API requests
+* File and folder automation
 * JSON and CSV report generation
 * Large Language Model integration
 * Gemini API usage
@@ -275,13 +296,21 @@ ai-engineering-learning-path/
 │   ├── requirements.txt
 │   ├── .gitignore
 │   └── product_lookup_report.json
-└── 09-weather-api-report/
+├── 09-weather-api-report/
+│   ├── README.md
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── .env.example
+│   ├── .gitignore
+│   └── weather_report.json
+└── 10-file-organizer-automation/
     ├── README.md
     ├── main.py
     ├── requirements.txt
-    ├── .env.example
     ├── .gitignore
-    └── weather_report.json
+    ├── sample_invoice.txt
+    ├── sample_customers.csv
+    └── sample_notes.md
 ```
 
 ## Future Projects
