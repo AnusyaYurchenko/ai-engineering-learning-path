@@ -217,6 +217,27 @@ Main concepts demonstrated:
 * Writing clean reusable functions
 * Practical office workflow automation logic
 
+### 11 - Book Scraper Report
+
+A beginner-friendly web scraping script that collects book data from a safe practice website and saves structured reports.
+
+The script visits multiple pages, sends HTML requests, parses the pages with BeautifulSoup, extracts title, price, availability, and rating, and saves the collected data to both `books_report.json` and `books_report.csv`.
+
+Project folder: `11-book-scraper-report/`
+
+Main concepts demonstrated:
+
+* Web scraping with `requests`
+* Parsing HTML with BeautifulSoup
+* Finding page elements with CSS selectors
+* Extracting and cleaning text data
+* Looping through multiple pages
+* Using `sleep()` between requests
+* Using `timeout=10` for safer requests
+* Saving scraped data as JSON
+* Saving scraped data as CSV
+* Practical market research automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -224,6 +245,7 @@ This portfolio is focused on:
 * AI engineering
 * Python development
 * External API requests
+* Web scraping and HTML parsing
 * File and folder automation
 * JSON and CSV report generation
 * Large Language Model integration
@@ -303,21 +325,27 @@ ai-engineering-learning-path/
 │   ├── .env.example
 │   ├── .gitignore
 │   └── weather_report.json
-└── 10-file-organizer-automation/
+├── 10-file-organizer-automation/
+│   ├── README.md
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── .gitignore
+│   ├── sample_invoice.txt
+│   ├── sample_customers.csv
+│   └── sample_notes.md
+└── 11-book-scraper-report/
     ├── README.md
     ├── main.py
     ├── requirements.txt
     ├── .gitignore
-    ├── sample_invoice.txt
-    ├── sample_customers.csv
-    └── sample_notes.md
+    ├── books_report.json
+    └── books_report.csv
 ```
 
 ## Future Projects
 
 Planned project areas:
 
-* Web scraping reports
 * Browser automation with Selenium
 * AI agents
 * RAG applications
