@@ -24,6 +24,13 @@ def get_page_html(page_number):
     return response.text
 
 
+def clean_price(price_element):
+    if not price_element:
+        return "Unknown price"
+
+    return price_element.get_text(strip=True).replace("Â", "").replace("£", "")
+
+
 def get_book_rating(rating_classes):
     possible_ratings = ["One", "Two", "Three", "Four", "Five"]
 
@@ -53,7 +60,7 @@ def extract_books_from_html(html, page_number):
         books.append({
             "page": page_number,
             "title": title_element.get("title", "Unknown title").strip(),
-            "price": price_element.get_text(strip=True) if price_element else "Unknown price",
+            "price": clean_price(price_element),
             "availability": availability_element.get_text(strip=True) if availability_element else "Unknown availability",
             "rating": get_book_rating(rating_classes)
         })
