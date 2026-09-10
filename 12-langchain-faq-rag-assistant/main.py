@@ -204,8 +204,8 @@ def answer_question(model, vector_store, question):
             "confidence": "low"
         }
 
-    source = data.get("source", "unknown")
-    confidence = data.get("confidence", "low").lower()
+    source = str(data.get("source", "unknown")).strip()
+    confidence = str(data.get("confidence", "low")).strip().lower()
 
     return {
         "question": question,
@@ -213,7 +213,7 @@ def answer_question(model, vector_store, question):
         "source": source,
         "confidence": confidence,
         "retrieved_sources": retrieved_sources,
-        "needs_human_review": source == "unknown" or confidence == "low"
+        "needs_human_review": source.lower() == "unknown" or confidence == "low"
     }
 
 
