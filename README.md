@@ -238,6 +238,27 @@ Main concepts demonstrated:
 * Saving scraped data as CSV
 * Practical market research automation logic
 
+### 12 - LangChain FAQ RAG Assistant
+
+A beginner-friendly RAG automation project that answers customer questions from a local FAQ using LangChain, Gemini embeddings, semantic retrieval, and Gemini chat responses.
+
+The script splits FAQ content into chunks, creates embeddings, stores them in an in-memory vector store, retrieves relevant FAQ chunks for each customer question, and saves structured answers with source, confidence, retrieved sources, and human-review routing.
+
+Project folder: `12-langchain-faq-rag-assistant/`
+
+Main concepts demonstrated:
+
+* LangChain project structure
+* Gemini chat model through LangChain
+* Gemini embeddings through LangChain
+* Text splitting with `RecursiveCharacterTextSplitter`
+* Semantic search with `InMemoryVectorStore`
+* Retrieval augmented generation
+* Prompting with retrieved context
+* Structured JSON answers
+* Human-review routing for unknown answers
+* Practical knowledge base automation logic
+
 ## Technical Focus
 
 This portfolio is focused on:
@@ -246,6 +267,9 @@ This portfolio is focused on:
 * Python development
 * External API requests
 * Web scraping and HTML parsing
+* LangChain application development
+* Embeddings and semantic search
+* Retrieval augmented generation
 * File and folder automation
 * JSON and CSV report generation
 * Large Language Model integration
@@ -333,13 +357,22 @@ ai-engineering-learning-path/
 │   ├── sample_invoice.txt
 │   ├── sample_customers.csv
 │   └── sample_notes.md
-└── 11-book-scraper-report/
+├── 11-book-scraper-report/
+│   ├── README.md
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── .gitignore
+│   ├── books_report.json
+│   └── books_report.csv
+└── 12-langchain-faq-rag-assistant/
     ├── README.md
     ├── main.py
     ├── requirements.txt
+    ├── .env.example
     ├── .gitignore
-    ├── books_report.json
-    └── books_report.csv
+    ├── faq.txt
+    ├── questions.txt
+    └── rag_answers_report.json
 ```
 
 ## Future Projects
@@ -348,7 +381,7 @@ Planned project areas:
 
 * Browser automation with Selenium
 * AI agents
-* RAG applications
+* Advanced RAG applications
 * Business automation tools
 * AI assistants
 * Workflow automation
