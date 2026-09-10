@@ -1,0 +1,17 @@
+Refunds:
+Refunds are processed within 7 business days after approval.
+
+Shipping:
+Standard delivery usually takes 3-5 business days.
+Tracking details are sent by email after the order ships.
+
+Invoices:
+Invoices are sent by email after purchase.
+Customers can also request another invoice copy from support.
+
+Returns:
+Returns must be made within 14 days.
+Items must be unused and in original packaging.
+
+Support:
+Customer support is available Monday to Friday during business hours.
