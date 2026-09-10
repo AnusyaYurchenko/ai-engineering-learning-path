@@ -1,0 +1,53 @@
+{
+    "answers": [
+        {
+            "question": "When will I get my refund?",
+            "answer": "Refunds are processed within 7 business days after approval.",
+            "source": "Refunds",
+            "confidence": "high",
+            "retrieved_sources": [
+                "Refunds",
+                "Returns"
+            ],
+            "needs_human_review": false
+        },
+        {
+            "question": "How long does delivery take?",
+            "answer": "Standard delivery usually takes 3-5 business days.",
+            "source": "Shipping",
+            "confidence": "high",
+            "retrieved_sources": [
+                "Shipping",
+                "Support"
+            ],
+            "needs_human_review": false
+        },
+        {
+            "question": "Where can I find my invoice?",
+            "answer": "Invoices are sent by email after purchase. Customers can also request another invoice copy from support.",
+            "source": "Invoices",
+            "confidence": "high",
+            "retrieved_sources": [
+                "Invoices",
+                "Support"
+            ],
+            "needs_human_review": false
+        },
+        {
+            "question": "Do you offer birthday discounts?",
+            "answer": "I do not know based on the FAQ.",
+            "source": "unknown",
+            "confidence": "low",
+            "retrieved_sources": [
+                "Support",
+                "Invoices"
+            ],
+            "needs_human_review": true
+        }
+    ],
+    "summary": {
+        "total_questions": 4,
+        "resolved_answers": 3,
+        "human_review_needed": 1
+    }
+}
